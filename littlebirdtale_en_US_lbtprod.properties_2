@@ -1,0 +1,19 @@
+# General
+com.lbt.ffmpegpath = /usr/local/bin/ffmpeg
+com.lbt.flvbindpath = /usr/local/bin/mp3wrap
+com.lbt.mp4boxpath = /usr/local/bin/MP4Box
+com.lbt.userdirectory = /srv/www/lbtprod.littlebirdtales.com/httpdocs/users/
+com.lbt.emptyaudio = /root/mcsetup/mcutility/testAudio.flv
+com.lbt.defaultimagepath = /root/mcsetup/mcutility/page_default.jpg
+com.lbt.textbg = /root/mcsetup/mcutility/textBG.png
+com.lbt.tempdirectory = /root/mcsetup/mcutility/temp/
+com.lbt.firstimage = first.png
+com.lbt.lastimage = last.png
+com.lbt.JDBC_DRIVER = com.mysql.jdbc.Driver
+com.lbt.JDBC_URL = jdbc\:mysql\://45.56.95.7\:3306/little_bird_tales
+com.lbt.JDBC_USER = dbdmvc
+com.lbt.JDBC_PASSWORD = 7i!y49G2
+com.lbt.host.name = lbtprod.littlebirdtales.com
+ffmpeg.merge.commandline = -loop 1 -y -i %image_file% -i %audio_file% -b:v 1200K -ac 2 -shortest  %output_file%
+ffmpeg.build.commandline = -i %combined_mpg_files% -vcodec libx264 -vpre ipod640 -acodec libfaac -ac 2 %output_file%
+
