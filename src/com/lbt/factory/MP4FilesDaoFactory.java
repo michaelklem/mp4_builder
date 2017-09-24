@@ -12,27 +12,27 @@ import java.sql.Connection;
 import com.lbt.dao.*;
 import com.lbt.jdbc.*;
 
-public class GiftCardsDaoFactory
+public class MP4FilesDaoFactory
 {
 	/**
 	 * Method 'create'
 	 * 
-	 * @return GiftCardsDao
+	 * @return MP4FilesDao
 	 */
-	public static GiftCardsDao create()
+	public static MP4FilesDao create()
 	{
-		return new GiftCardsDaoImpl();
+		return new MP4FilesDaoImpl();
 	}
 
 	/**
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return GiftCardsDao
+	 * @return MP4FilesDao
 	 */
-	public static GiftCardsDao create(Connection conn)
+	public static MP4FilesDao create(Connection conn)
 	{
-		return new GiftCardsDaoImpl( conn );
+		return new MP4FilesDaoImpl( conn );
 	}
 
 }

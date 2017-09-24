@@ -5,17 +5,18 @@ public class HTMLUtil {
 	    {
 	          // Remove HTML tag from java String
 		   if(htmlString==null) return "";
-	        String noHTMLString = htmlString.replaceAll("\\<.*?\\>", "");
+	       
+		   String noHTMLString = htmlString.replaceAll("\\<.*?\\>", "");
 
 	        // Remove Carriage return from java String
-	        noHTMLString = noHTMLString.replaceAll("\r", "<br/>");
+	        noHTMLString = noHTMLString.replaceAll("\r", "");
 
-	        // Remove New line from java string and replace html break
 	        noHTMLString = noHTMLString.replaceAll("\n", " ");
-	     //   noHTMLString = noHTMLString.replaceAll("\'", "&#39;");
-	        noHTMLString = noHTMLString.replaceAll("\"", "&quot;");
-	        return noHTMLString;
+	        noHTMLString = noHTMLString.replaceAll("&nbsp;", "");
+	        noHTMLString = noHTMLString.replaceAll("&#039;", "'");
+	        noHTMLString = noHTMLString.replaceAll("&quot;", "\"");
+	        noHTMLString = noHTMLString.replaceAll("&amp;", "&");
+	        
+	        return HtmlEntities.decode(noHTMLString);
 	    }
-
-
 }

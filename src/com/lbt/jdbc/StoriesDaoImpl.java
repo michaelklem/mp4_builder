@@ -37,7 +37,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT story_id, user_id, title, author, image_path, image_path_med, image_path_sml, public, date_created, date_modified, contest_related, featured, craft, unsaved, audio_path, is_processing, is_complied, date_complied, is_error FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT story_id, user_id, title, author, image_path, image_path_med, image_path_sml, public, date_created, date_modified, contest_related, featured, craft, unsaved, audio_path, is_processing, is_complied, date_complied, is_error, process_as_mp4, mp4_job_requested_date, mp4_job_completed_date, file_name, is_audio_muted FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -52,7 +52,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * SQL UPDATE statement for this table
 	 */
-	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET story_id = ?, user_id = ?, title = ?, author = ?, image_path = ?, image_path_med = ?, image_path_sml = ?, public = ?, date_created = ?, date_modified = ?, contest_related = ?, featured = ?, craft = ?, unsaved = ?, audio_path = ?, is_processing = ?, is_complied = ?, date_complied = ?, is_error = ? WHERE story_id = ?";
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET story_id = ?, user_id = ?, title = ?, author = ?, image_path = ?, image_path_med = ?, image_path_sml = ?, public = ?, date_created = ?, date_modified = ?, contest_related = ?, featured = ?, craft = ?, unsaved = ?, audio_path = ?, is_processing = ?, is_complied = ?, date_complied = ?, is_error = ?, process_as_mp4 = ?, mp4_job_completed_date = ?, file_name = ? WHERE story_id = ?";
 
 	/** 
 	 * SQL DELETE statement for this table
@@ -154,10 +154,13 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected static final int COLUMN_IS_ERROR = 19;
 
+	protected static final int COLUMN_FILE_NAME = 20;
+	protected static final int COLUMN_IS_AUDIO_MUTED = 24;
+
 	/** 
 	 * Number of columns
 	 */
-	protected static final int NUMBER_OF_COLUMNS = 19;
+	protected static final int NUMBER_OF_COLUMNS = 20;
 
 	/** 
 	 * Index of primary-key column story_id
@@ -325,8 +328,14 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			} else {
 				stmt.setShort( index++, dto.getIsError() );
 			}
-		
-			stmt.setLong( 20, pk.getStoryId() );
+
+			stmt.setShort( index++, dto.getProcessAsMp4() );
+
+			stmt.setTimestamp(index++, dto.getMp4JobCompletedDate()==null ? null : new java.sql.Timestamp( dto.getMp4JobCompletedDate().getTime() ) );
+
+			stmt.setString( index++, dto.getFilename() );
+
+			stmt.setLong( 23, pk.getStoryId() );
 			int rows = stmt.executeUpdate();
 			reset(dto);
 			long t2 = System.currentTimeMillis();
@@ -608,7 +617,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.stories";
+		return "stories";
 	}
 
 	/** 
@@ -659,6 +668,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setDateCreated( rs.getTimestamp(COLUMN_DATE_CREATED ) );
 		dto.setDateModified( rs.getTimestamp(COLUMN_DATE_MODIFIED ) );
 		dto.setContestRelated( rs.getShort( COLUMN_CONTEST_RELATED ) );
+		dto.setIsAudioMuted( rs.getBoolean( COLUMN_IS_AUDIO_MUTED ) );
 		if (rs.wasNull()) {
 			dto.setContestRelatedNull( true );
 		}
@@ -690,7 +700,9 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		if (rs.wasNull()) {
 			dto.setIsErrorNull( true );
 		}
-		
+
+		dto.setFilename( rs.getString( COLUMN_FILE_NAME ) );
+
 	}
 
 	/** 

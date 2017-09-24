@@ -11,12 +11,16 @@ package com.lbt.dto;
 import com.lbt.dao.*;
 import com.lbt.factory.*;
 import com.lbt.exceptions.*;
+
 import java.io.Serializable;
 import java.util.*;
-import java.util.Date;
 
 public class Stories implements Serializable
 {
+	/**
+	 * used to store the file name of the generated mp4
+	 */
+	protected String filename;
 	/** 
 	 * This attribute maps to the column story_id in the stories table.
 	 */
@@ -142,6 +146,20 @@ public class Stories implements Serializable
 	 */
 	protected boolean isErrorNull = true;
 
+	/** 
+	 */
+	protected short processAsMp4;
+
+	/** 
+	 */
+	protected Date mp4JobRequestedDate;
+
+	/** 
+	 */
+	protected Date mp4JobCompletedDate;
+
+	protected boolean isAudioMuted;
+
 	/**
 	 * Method 'Stories'
 	 * 
@@ -150,6 +168,52 @@ public class Stories implements Serializable
 	{
 	}
 
+	public Users getUser()
+	{
+		Users user = null;
+		try {
+			UsersDao _dao = UsersDaoFactory.create();
+			 Users[] u;
+			 u = _dao.findWhereUserIdEquals(getUserId());
+			 if (u.length > 0)
+			 {
+				 user = u[0];
+			 }
+		} catch (UsersDaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	// returns the bucket path for a user ie. a/3/2/1
+	public String getBucketPath()
+	{
+		String bucketPath = "";
+		Users u = getUser();
+		if ( u != null)
+		{
+			bucketPath = u.getBucketPath();
+		}
+		return bucketPath;
+	}
+	
+	// returns the bucket path for a user with their user id appended ie. a/3/2/1/<user_id>
+	public String getFullBucketPath()
+	{
+		return getBucketPath() + "/" + userId;
+	}
+
+	public String getFilename()
+	{
+		return this.filename;
+	}
+	
+	public void setFilename(String filename)
+	{
+		this.filename = filename;
+	}
+	
 	/**
 	 * Method 'getStoryId'
 	 * 
@@ -500,6 +564,11 @@ public class Stories implements Serializable
 	 */
 	public String getAudioPath()
 	{
+		if (getIsAudioMuted())
+		{
+			System.out.println("Cover audio is muted2");
+			audioPath = null;
+		}
 		return audioPath;
 	}
 
@@ -881,7 +950,64 @@ public class Stories implements Serializable
 		ret.append( ", isComplied=" + isComplied );
 		ret.append( ", dateComplied=" + dateComplied );
 		ret.append( ", isError=" + isError );
+		ret.append( ", processAsMp4=" + processAsMp4 );
+		ret.append( ", mp4JobCompletedDate=" + mp4JobCompletedDate );
+		ret.append( ", isAudioMuted=" + isAudioMuted );
 		return ret.toString();
+	}
+
+	/**
+	 */
+	public void setProcessAsMp4(short value)
+	{
+		this.processAsMp4 = value;
+	}
+
+	/**
+	 */
+	public short getProcessAsMp4()
+	{
+		return this.processAsMp4;
+	}
+
+	/**
+	 */
+	public Date getMp4JobRequestedDate()
+	{
+		return mp4JobRequestedDate;
+	}
+
+	/**
+	 */
+	public void setMp4JobRequestedDate(Date date)
+	{
+		this.mp4JobRequestedDate = date;
+	}
+
+	/**
+	 */
+	public Date getMp4JobCompletedDate()
+	{
+		return mp4JobCompletedDate;
+	}
+
+	/**
+	 */
+	public void setMp4JobCompletedDate(Date date)
+	{
+		this.mp4JobCompletedDate = date;
+	}
+
+	public boolean getIsAudioMuted()
+	{
+		return isAudioMuted;
+	}
+
+	/**
+	 */
+	public void setIsAudioMuted(boolean v)
+	{
+		this.isAudioMuted = v;
 	}
 
 }

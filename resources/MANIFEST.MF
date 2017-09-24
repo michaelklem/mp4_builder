@@ -1,30 +1,30 @@
 Manifest-Version: 1.0
-Class-Path: . mcutility_lib/tomcat-juli-slf4j-1.5.0.jar mcutility_lib/
- xmlrpc-2.0.1.jar mcutility_lib/catalina-6.0.26.jar mcutility_lib/ehca
- che-2.1.0.jar mcutility_lib/jul-to-slf4j-1.5.10.jar mcutility_lib/jru
- by-complete-1.1.6.jar mcutility_lib/asm-commons-3.1.jar mcutility_lib
- /spring-expression-3.0.3.jar mcutility_lib/tomcat-coyote-6.0.26.jar m
- cutility_lib/wrapperdemo.jar mcutility_lib/jython-2.5.jar mcutility_l
- ib/log4j-over-slf4j-1.5.10.jar mcutility_lib/mysql-connector-java-5.1
- .15-bin.jar mcutility_lib/mina-integration-jmx-2.0.0-RC2-SNAPSHOT.jar
-  mcutility_lib/commons-httpclient-3.1.jar mcutility_lib/spring-asm-3.
- 0.3.jar mcutility_lib/spring-web-3.0.3.jar mcutility_lib/mina-core-2.
- 0.0-RC2-SNAPSHOT.jar mcutility_lib/asm-3.1.jar mcutility_lib/jaudiota
- gger-1.0.8.jar mcutility_lib/spring-beans-3.0.3.jar mcutility_lib/bcp
- rov-jdk16-145.jar mcutility_lib/logback-classic-0.9.18.jar mcutility_
- lib/slf4j-api-1.5.10.jar mcutility_lib/mina-integration-beans-2.0.0-R
- C2-SNAPSHOT.jar mcutility_lib/red5.jar mcutility_lib/commons-beanutil
- s-1.8.2.jar mcutility_lib/wrapper.jar mcutility_lib/jcl-over-slf4j-1.
- 5.10.jar mcutility_lib/logback-core-0.9.18.jar mcutility_lib/commons-
- collections-3.2.1.jar mcutility_lib/wrappertest.jar mcutility_lib/gro
- ovy-all-1.5.7.jar mcutility_lib/commons-pool-1.4.jar mcutility_lib/sp
- ring-context-3.0.3.jar mcutility_lib/jasper-jdt-6.0.26.jar mcutility_
- lib/spring-core-3.0.3.jar mcutility_lib/spring-context-support-3.0.3.
- jar mcutility_lib/commons-modeler-2.0.1.jar mcutility_lib/antlr-3.1.3
- .jar mcutility_lib/commons-lang-2.4.jar mcutility_lib/jasper-6.0.26.j
- ar mcutility_lib/jasper-el-6.0.26.jar mcutility_lib/commons-codec-1.4
- .jar mcutility_lib/javaee-api-5.1.1.jar mcutility_lib/jruby-engine-1.
- 1.6.jar mcutility_lib/quartz-1.6.5.jar mcutility_lib/xercesImpl-2.9.1
+Class-Path: . external_jars/tomcat-juli-slf4j-1.5.0.jar external_jars/
+ xmlrpc-2.0.1.jar external_jars/catalina-6.0.26.jar external_jars/ehca
+ che-2.1.0.jar external_jars/jul-to-slf4j-1.5.10.jar external_jars/jru
+ by-complete-1.1.6.jar external_jars/asm-commons-3.1.jar external_jars
+ /spring-expression-3.0.3.jar external_jars/tomcat-coyote-6.0.26.jar m
+ cutility_lib/wrapperdemo.jar external_jars/jython-2.5.jar mcutility_l
+ ib/log4j-over-slf4j-1.5.10.jar external_jars/mysql-connector-java-5.1
+ .15-bin.jar external_jars/mina-integration-jmx-2.0.0-RC2-SNAPSHOT.jar
+  external_jars/commons-httpclient-3.1.jar external_jars/spring-asm-3.
+ 0.3.jar external_jars/spring-web-3.0.3.jar external_jars/mina-core-2.
+ 0.0-RC2-SNAPSHOT.jar external_jars/asm-3.1.jar external_jars/jaudiota
+ gger-1.0.8.jar external_jars/spring-beans-3.0.3.jar external_jars/bcp
+ rov-jdk16-145.jar external_jars/logback-classic-0.9.18.jar mcutility_
+ lib/slf4j-api-1.5.10.jar external_jars/mina-integration-beans-2.0.0-R
+ C2-SNAPSHOT.jar external_jars/red5.jar external_jars/commons-beanutil
+ s-1.8.2.jar external_jars/wrapper.jar external_jars/jcl-over-slf4j-1.
+ 5.10.jar external_jars/logback-core-0.9.18.jar external_jars/commons-
+ collections-3.2.1.jar external_jars/wrappertest.jar external_jars/gro
+ ovy-all-1.5.7.jar external_jars/commons-pool-1.4.jar external_jars/sp
+ ring-context-3.0.3.jar external_jars/jasper-jdt-6.0.26.jar mcutility_
+ lib/spring-core-3.0.3.jar external_jars/spring-context-support-3.0.3.
+ jar external_jars/commons-modeler-2.0.1.jar external_jars/antlr-3.1.3
+ .jar external_jars/commons-lang-2.4.jar external_jars/jasper-6.0.26.j
+ ar external_jars/jasper-el-6.0.26.jar external_jars/commons-codec-1.4
+ .jar external_jars/javaee-api-5.1.1.jar external_jars/jruby-engine-1.
+ 1.6.jar external_jars/quartz-1.6.5.jar external_jars/xercesImpl-2.9.1
  .jar
 Main-Class: com.lbt.Program
 

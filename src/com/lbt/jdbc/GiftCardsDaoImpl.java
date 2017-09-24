@@ -9,7 +9,6 @@
 package com.lbt.jdbc;
 
 import com.lbt.dao.*;
-import com.lbt.factory.*;
 import java.util.Date;
 import com.lbt.dto.*;
 import com.lbt.exceptions.*;
@@ -19,9 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.List;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 public class GiftCardsDaoImpl extends AbstractDAO implements GiftCardsDao
@@ -453,7 +449,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.gift_cards";
+		return "gift_cards";
 	}
 
 	/** 
@@ -476,7 +472,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected GiftCards[] fetchMultiResults(ResultSet rs) throws SQLException
 	{
-		Collection resultList = new ArrayList();
+		Collection<GiftCards> resultList = new ArrayList<GiftCards>();
 		while (rs.next()) {
 			GiftCards dto = new GiftCards();
 			populateDto( dto, rs);

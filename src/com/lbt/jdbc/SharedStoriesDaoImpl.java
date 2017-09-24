@@ -315,7 +315,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.shared_stories";
+		return "shared_stories";
 	}
 
 	/** 

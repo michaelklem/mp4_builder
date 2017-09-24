@@ -42,6 +42,8 @@ public class Users implements Serializable
 	 */
 	protected String password;
 
+	protected String bucketPath;
+
 	/** 
 	 * This attribute maps to the column date_added in the users table.
 	 */
@@ -215,6 +217,18 @@ public class Users implements Serializable
 		this.password = password;
 	}
 
+
+	public String getBucketPath()
+	{
+		return bucketPath;
+	}
+
+	public void setBucketPath(String data)
+	{
+		this.bucketPath = data;
+	}
+
+	
 	/**
 	 * Method 'getDateAdded'
 	 * 
@@ -664,6 +678,7 @@ public class Users implements Serializable
 		ret.append( ", canceled=" + canceled );
 		ret.append( ", cancelDate=" + cancelDate );
 		ret.append( ", demoAccount=" + demoAccount );
+		ret.append( ", bucketPath=" + bucketPath );
 		return ret.toString();
 	}
 

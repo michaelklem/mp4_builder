@@ -9,7 +9,6 @@
 package com.lbt.jdbc;
 
 import com.lbt.dao.*;
-import com.lbt.factory.*;
 import java.util.Date;
 import com.lbt.dto.*;
 import com.lbt.exceptions.*;
@@ -19,9 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.List;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 public class CouponsDaoImpl extends AbstractDAO implements CouponsDao
@@ -410,7 +406,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.coupons";
+		return "coupons";
 	}
 
 	/** 
@@ -433,7 +429,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected Coupons[] fetchMultiResults(ResultSet rs) throws SQLException
 	{
-		Collection resultList = new ArrayList();
+		Collection<Coupons> resultList = new ArrayList<Coupons>();
 		while (rs.next()) {
 			Coupons dto = new Coupons();
 			populateDto( dto, rs);

@@ -11,73 +11,83 @@ package com.lbt.dto;
 import com.lbt.dao.*;
 import com.lbt.factory.*;
 import com.lbt.exceptions.*;
-import java.io.Serializable;
-import java.util.*;
-import java.util.Date;
 
-public class StoryPages implements Serializable
-{
-	/** 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.util.*;
+
+public class StoryPages implements Serializable {
+	/**
 	 * This attribute maps to the column story_page_id in the story_pages table.
 	 */
 	protected long storyPageId;
 
-	/** 
+	/**
 	 * This attribute maps to the column story_id in the story_pages table.
 	 */
 	protected long storyId;
 
-	/** 
+	/**
 	 * This attribute maps to the column body in the story_pages table.
 	 */
 	protected String body;
 
-	/** 
+	/**
 	 * This attribute maps to the column page_num in the story_pages table.
 	 */
 	protected short pageNum;
 
-	/** 
+	/**
 	 * This attribute maps to the column image_path in the story_pages table.
 	 */
 	protected String imagePath;
 
-	/** 
-	 * This attribute maps to the column image_path_med in the story_pages table.
+	/**
+	 * This attribute maps to the column image_path_med in the story_pages
+	 * table.
 	 */
 	protected String imagePathMed;
 
-	/** 
-	 * This attribute maps to the column image_path_sml in the story_pages table.
+	/**
+	 * This attribute maps to the column image_path_sml in the story_pages
+	 * table.
 	 */
 	protected String imagePathSml;
 
-	/** 
+	/**
 	 * This attribute maps to the column audio_path in the story_pages table.
 	 */
 	protected String audioPath;
 
-	/** 
+	/**
 	 * This attribute maps to the column date_created in the story_pages table.
 	 */
 	protected Date dateCreated;
 
-	/** 
+	/**
 	 * This attribute maps to the column date_modified in the story_pages table.
 	 */
 	protected Date dateModified;
 
-	/** 
+	/**
 	 * This attribute maps to the column unsaved in the story_pages table.
 	 */
 	protected short unsaved;
+
+	protected boolean isAudioMuted;
 
 	/**
 	 * Method 'StoryPages'
 	 * 
 	 */
-	public StoryPages()
-	{
+	public StoryPages() {
 	}
 
 	/**
@@ -85,8 +95,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return long
 	 */
-	public long getStoryPageId()
-	{
+	public long getStoryPageId() {
 		return storyPageId;
 	}
 
@@ -95,8 +104,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param storyPageId
 	 */
-	public void setStoryPageId(long storyPageId)
-	{
+	public void setStoryPageId(long storyPageId) {
 		this.storyPageId = storyPageId;
 	}
 
@@ -105,8 +113,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return long
 	 */
-	public long getStoryId()
-	{
+	public long getStoryId() {
 		return storyId;
 	}
 
@@ -115,8 +122,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param storyId
 	 */
-	public void setStoryId(long storyId)
-	{
+	public void setStoryId(long storyId) {
 		this.storyId = storyId;
 	}
 
@@ -125,9 +131,29 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return String
 	 */
-	public String getBody()
-	{
-		return body;
+	public String getBody() {
+		String result = "";
+		try {
+			if (body != null) {
+				result = new String(body.getBytes("UTF-8"), "UTF-8");
+				System.out.println("XXXX body: " + result);
+
+				// write data to a file to verify it is legit.
+				// try
+				// {
+				// PrintWriter writer = new PrintWriter("xxx.txt", "UTF-8");
+				// writer.println("results");
+				// writer.println("The second line Tá sé ina");
+				// writer.println(result);
+				// writer.close();
+				// }
+				// catch(Exception e){}
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	/**
@@ -135,8 +161,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param body
 	 */
-	public void setBody(String body)
-	{
+	public void setBody(String body) {
 		this.body = body;
 	}
 
@@ -145,8 +170,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return short
 	 */
-	public short getPageNum()
-	{
+	public short getPageNum() {
 		return pageNum;
 	}
 
@@ -155,8 +179,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param pageNum
 	 */
-	public void setPageNum(short pageNum)
-	{
+	public void setPageNum(short pageNum) {
 		this.pageNum = pageNum;
 	}
 
@@ -165,8 +188,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return String
 	 */
-	public String getImagePath()
-	{
+	public String getImagePath() {
 		return imagePath;
 	}
 
@@ -175,8 +197,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param imagePath
 	 */
-	public void setImagePath(String imagePath)
-	{
+	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
 
@@ -185,8 +206,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return String
 	 */
-	public String getImagePathMed()
-	{
+	public String getImagePathMed() {
 		return imagePathMed;
 	}
 
@@ -195,8 +215,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param imagePathMed
 	 */
-	public void setImagePathMed(String imagePathMed)
-	{
+	public void setImagePathMed(String imagePathMed) {
 		this.imagePathMed = imagePathMed;
 	}
 
@@ -205,8 +224,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return String
 	 */
-	public String getImagePathSml()
-	{
+	public String getImagePathSml() {
 		return imagePathSml;
 	}
 
@@ -215,8 +233,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param imagePathSml
 	 */
-	public void setImagePathSml(String imagePathSml)
-	{
+	public void setImagePathSml(String imagePathSml) {
 		this.imagePathSml = imagePathSml;
 	}
 
@@ -225,8 +242,11 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return String
 	 */
-	public String getAudioPath()
-	{
+	public String getAudioPath() {
+		if (getIsAudioMuted()) {
+			System.out.println("Page audio is muted");
+			audioPath = null;
+		}
 		return audioPath;
 	}
 
@@ -235,8 +255,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param audioPath
 	 */
-	public void setAudioPath(String audioPath)
-	{
+	public void setAudioPath(String audioPath) {
 		this.audioPath = audioPath;
 	}
 
@@ -245,8 +264,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return Date
 	 */
-	public Date getDateCreated()
-	{
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
@@ -255,8 +273,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param dateCreated
 	 */
-	public void setDateCreated(Date dateCreated)
-	{
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -265,8 +282,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return Date
 	 */
-	public Date getDateModified()
-	{
+	public Date getDateModified() {
 		return dateModified;
 	}
 
@@ -275,8 +291,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param dateModified
 	 */
-	public void setDateModified(Date dateModified)
-	{
+	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
 
@@ -285,8 +300,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return short
 	 */
-	public short getUnsaved()
-	{
+	public short getUnsaved() {
 		return unsaved;
 	}
 
@@ -295,8 +309,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @param unsaved
 	 */
-	public void setUnsaved(short unsaved)
-	{
+	public void setUnsaved(short unsaved) {
 		this.unsaved = unsaved;
 	}
 
@@ -306,65 +319,64 @@ public class StoryPages implements Serializable
 	 * @param _other
 	 * @return boolean
 	 */
-	public boolean equals(Object _other)
-	{
+	public boolean equals(Object _other) {
 		if (_other == null) {
 			return false;
 		}
-		
+
 		if (_other == this) {
 			return true;
 		}
-		
+
 		if (!(_other instanceof StoryPages)) {
 			return false;
 		}
-		
+
 		final StoryPages _cast = (StoryPages) _other;
 		if (storyPageId != _cast.storyPageId) {
 			return false;
 		}
-		
+
 		if (storyId != _cast.storyId) {
 			return false;
 		}
-		
-		if (body == null ? _cast.body != body : !body.equals( _cast.body )) {
+
+		if (body == null ? _cast.body != body : !body.equals(_cast.body)) {
 			return false;
 		}
-		
+
 		if (pageNum != _cast.pageNum) {
 			return false;
 		}
-		
-		if (imagePath == null ? _cast.imagePath != imagePath : !imagePath.equals( _cast.imagePath )) {
+
+		if (imagePath == null ? _cast.imagePath != imagePath : !imagePath.equals(_cast.imagePath)) {
 			return false;
 		}
-		
-		if (imagePathMed == null ? _cast.imagePathMed != imagePathMed : !imagePathMed.equals( _cast.imagePathMed )) {
+
+		if (imagePathMed == null ? _cast.imagePathMed != imagePathMed : !imagePathMed.equals(_cast.imagePathMed)) {
 			return false;
 		}
-		
-		if (imagePathSml == null ? _cast.imagePathSml != imagePathSml : !imagePathSml.equals( _cast.imagePathSml )) {
+
+		if (imagePathSml == null ? _cast.imagePathSml != imagePathSml : !imagePathSml.equals(_cast.imagePathSml)) {
 			return false;
 		}
-		
-		if (audioPath == null ? _cast.audioPath != audioPath : !audioPath.equals( _cast.audioPath )) {
+
+		if (audioPath == null ? _cast.audioPath != audioPath : !audioPath.equals(_cast.audioPath)) {
 			return false;
 		}
-		
-		if (dateCreated == null ? _cast.dateCreated != dateCreated : !dateCreated.equals( _cast.dateCreated )) {
+
+		if (dateCreated == null ? _cast.dateCreated != dateCreated : !dateCreated.equals(_cast.dateCreated)) {
 			return false;
 		}
-		
-		if (dateModified == null ? _cast.dateModified != dateModified : !dateModified.equals( _cast.dateModified )) {
+
+		if (dateModified == null ? _cast.dateModified != dateModified : !dateModified.equals(_cast.dateModified)) {
 			return false;
 		}
-		
+
 		if (unsaved != _cast.unsaved) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -373,40 +385,39 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return int
 	 */
-	public int hashCode()
-	{
+	public int hashCode() {
 		int _hashCode = 0;
 		_hashCode = 29 * _hashCode + (int) (storyPageId ^ (storyPageId >>> 32));
 		_hashCode = 29 * _hashCode + (int) (storyId ^ (storyId >>> 32));
 		if (body != null) {
 			_hashCode = 29 * _hashCode + body.hashCode();
 		}
-		
+
 		_hashCode = 29 * _hashCode + (int) pageNum;
 		if (imagePath != null) {
 			_hashCode = 29 * _hashCode + imagePath.hashCode();
 		}
-		
+
 		if (imagePathMed != null) {
 			_hashCode = 29 * _hashCode + imagePathMed.hashCode();
 		}
-		
+
 		if (imagePathSml != null) {
 			_hashCode = 29 * _hashCode + imagePathSml.hashCode();
 		}
-		
+
 		if (audioPath != null) {
 			_hashCode = 29 * _hashCode + audioPath.hashCode();
 		}
-		
+
 		if (dateCreated != null) {
 			_hashCode = 29 * _hashCode + dateCreated.hashCode();
 		}
-		
+
 		if (dateModified != null) {
 			_hashCode = 29 * _hashCode + dateModified.hashCode();
 		}
-		
+
 		_hashCode = 29 * _hashCode + (int) unsaved;
 		return _hashCode;
 	}
@@ -416,8 +427,7 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return StoryPagesPk
 	 */
-	public StoryPagesPk createPk()
-	{
+	public StoryPagesPk createPk() {
 		return new StoryPagesPk(storyPageId);
 	}
 
@@ -426,22 +436,32 @@ public class StoryPages implements Serializable
 	 * 
 	 * @return String
 	 */
-	public String toString()
-	{
+	public String toString() {
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.lbt.dto.StoryPages: " );
-		ret.append( "storyPageId=" + storyPageId );
-		ret.append( ", storyId=" + storyId );
-		ret.append( ", body=" + body );
-		ret.append( ", pageNum=" + pageNum );
-		ret.append( ", imagePath=" + imagePath );
-		ret.append( ", imagePathMed=" + imagePathMed );
-		ret.append( ", imagePathSml=" + imagePathSml );
-		ret.append( ", audioPath=" + audioPath );
-		ret.append( ", dateCreated=" + dateCreated );
-		ret.append( ", dateModified=" + dateModified );
-		ret.append( ", unsaved=" + unsaved );
+		ret.append("com.lbt.dto.StoryPages: ");
+		ret.append("storyPageId=" + storyPageId);
+		ret.append(", storyId=" + storyId);
+		ret.append(", body=" + body);
+		ret.append(", pageNum=" + pageNum);
+		ret.append(", imagePath=" + imagePath);
+		ret.append(", imagePathMed=" + imagePathMed);
+		ret.append(", imagePathSml=" + imagePathSml);
+		ret.append(", audioPath=" + audioPath);
+		ret.append(", dateCreated=" + dateCreated);
+		ret.append(", dateModified=" + dateModified);
+		ret.append(", unsaved=" + unsaved);
+		ret.append(", isAudioMuted=" + isAudioMuted);
 		return ret.toString();
+	}
+
+	public boolean getIsAudioMuted() {
+		return isAudioMuted;
+	}
+
+	/**
+	 */
+	public void setIsAudioMuted(boolean v) {
+		this.isAudioMuted = v;
 	}
 
 }

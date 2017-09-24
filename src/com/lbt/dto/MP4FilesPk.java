@@ -13,65 +13,65 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /** 
- * This class represents the primary key of the green_tips table.
+ * This class represents the primary key of the stories table.
  */
-public class GreenTipsPk implements Serializable
+public class MP4FilesPk implements Serializable
 {
-	protected long tipId;
+	protected long mp4Id;
 
 	/** 
-	 * This attribute represents whether the primitive attribute tipId is null.
+	 * This attribute represents whether the primitive attribute mp4Id is null.
 	 */
-	protected boolean tipIdNull;
+	protected boolean mp4IdNull;
 
 	/** 
-	 * Sets the value of tipId
+	 * Sets the value of mp4Id
 	 */
-	public void setTipId(long tipId)
+	public void setMp4Id(long mp4Id)
 	{
-		this.tipId = tipId;
+		this.mp4Id = mp4Id;
 	}
 
 	/** 
-	 * Gets the value of tipId
+	 * Gets the value of mp4Id
 	 */
-	public long getTipId()
+	public long getMp4Id()
 	{
-		return tipId;
-	}
-
-	/**
-	 * Method 'GreenTipsPk'
-	 * 
-	 */
-	public GreenTipsPk()
-	{
+		return mp4Id;
 	}
 
 	/**
-	 * Method 'GreenTipsPk'
+	 * Method 'MP4FilesPk'
 	 * 
-	 * @param tipId
 	 */
-	public GreenTipsPk(final long tipId)
+	public MP4FilesPk()
 	{
-		this.tipId = tipId;
+	}
+
+	/**
+	 * Method 'MP4FilesPk'
+	 * 
+	 * @param mp4Id
+	 */
+	public MP4FilesPk(final long mp4Id)
+	{
+		this.mp4Id = mp4Id;
 	}
 
 	/** 
-	 * Sets the value of tipIdNull
+	 * Sets the value of mp4IdNull
 	 */
-	public void setTipIdNull(boolean tipIdNull)
+	public void setMp4IdNull(boolean mp4IdNull)
 	{
-		this.tipIdNull = tipIdNull;
+		this.mp4IdNull = mp4IdNull;
 	}
 
 	/** 
-	 * Gets the value of tipIdNull
+	 * Gets the value of mp4IdNull
 	 */
-	public boolean isTipIdNull()
+	public boolean isMp4IdNull()
 	{
-		return tipIdNull;
+		return mp4IdNull;
 	}
 
 	/**
@@ -90,16 +90,16 @@ public class GreenTipsPk implements Serializable
 			return true;
 		}
 		
-		if (!(_other instanceof GreenTipsPk)) {
+		if (!(_other instanceof MP4FilesPk)) {
 			return false;
 		}
 		
-		final GreenTipsPk _cast = (GreenTipsPk) _other;
-		if (tipId != _cast.tipId) {
+		final MP4FilesPk _cast = (MP4FilesPk) _other;
+		if (mp4Id != _cast.mp4Id) {
 			return false;
 		}
 		
-		if (tipIdNull != _cast.tipIdNull) {
+		if (mp4IdNull != _cast.mp4IdNull) {
 			return false;
 		}
 		
@@ -114,8 +114,8 @@ public class GreenTipsPk implements Serializable
 	public int hashCode()
 	{
 		int _hashCode = 0;
-		_hashCode = 29 * _hashCode + (int) (tipId ^ (tipId >>> 32));
-		_hashCode = 29 * _hashCode + (tipIdNull ? 1 : 0);
+		_hashCode = 29 * _hashCode + (int) (mp4Id ^ (mp4Id >>> 32));
+		_hashCode = 29 * _hashCode + (mp4IdNull ? 1 : 0);
 		return _hashCode;
 	}
 
@@ -127,8 +127,8 @@ public class GreenTipsPk implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.lbt.dto.GreenTipsPk: " );
-		ret.append( "tipId=" + tipId );
+		ret.append( "com.lbt.dto.MP4FilesPk: " );
+		ret.append( "mp4Id=" + mp4Id );
 		return ret.toString();
 	}
 

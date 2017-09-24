@@ -37,7 +37,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT user_id, first_name, last_name, email, password, date_added, date_modified, confirmation_code, confirmed, admin, paid, subscription_expires, subscription_years, reminder_sent, canceled, cancel_date, demo_account FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT user_id, first_name, last_name, email, password, date_added, date_modified, confirmation_code, confirmed, admin, paid, subscription_expires, subscription_years, reminder_sent, canceled, cancel_date, demo_account, bucket_path FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -143,11 +143,13 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 * Index of column demo_account
 	 */
 	protected static final int COLUMN_DEMO_ACCOUNT = 17;
+	
+	protected static final int COLUMN_BUCKET_PATH = 18;
 
 	/** 
 	 * Number of columns
 	 */
-	protected static final int NUMBER_OF_COLUMNS = 17;
+	protected static final int NUMBER_OF_COLUMNS = 18;
 
 	/** 
 	 * Index of primary-key column user_id
@@ -520,7 +522,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.users";
+		return "users";
 	}
 
 	/** 
@@ -581,6 +583,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setCanceled( rs.getShort( COLUMN_CANCELED ) );
 		dto.setCancelDate( rs.getTimestamp(COLUMN_CANCEL_DATE ) );
 		dto.setDemoAccount( rs.getShort( COLUMN_DEMO_ACCOUNT ) );
+		dto.setBucketPath( rs.getString( COLUMN_BUCKET_PATH ) );
 	}
 
 	/** 

@@ -9,7 +9,6 @@
 package com.lbt.jdbc;
 
 import com.lbt.dao.*;
-import com.lbt.factory.*;
 import java.util.Date;
 import com.lbt.dto.*;
 import com.lbt.exceptions.*;
@@ -19,9 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.List;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 public class ErrorLogDaoImpl extends AbstractDAO implements ErrorLogDao
@@ -325,7 +321,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.error_log";
+		return "error_log";
 	}
 
 	/** 
@@ -348,7 +344,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected ErrorLog[] fetchMultiResults(ResultSet rs) throws SQLException
 	{
-		Collection resultList = new ArrayList();
+		Collection<ErrorLog> resultList = new ArrayList<ErrorLog>();
 		while (rs.next()) {
 			ErrorLog dto = new ErrorLog();
 			populateDto( dto, rs);

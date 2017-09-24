@@ -8,25 +8,25 @@
 
 package com.lbt.exceptions;
 
-public class SessionParamsDaoException extends DaoException
+public class MP4FilesDaoException extends DaoException
 {
 	/**
-	 * Method 'SessionParamsDaoException'
+	 * Method 'MP4FilesDaoException'
 	 * 
 	 * @param message
 	 */
-	public SessionParamsDaoException(String message)
+	public MP4FilesDaoException(String message)
 	{
 		super(message);
 	}
 
 	/**
-	 * Method 'SessionParamsDaoException'
+	 * Method 'MP4FilesDaoException'
 	 * 
 	 * @param message
 	 * @param cause
 	 */
-	public SessionParamsDaoException(String message, Throwable cause)
+	public MP4FilesDaoException(String message, Throwable cause)
 	{
 		super(message, cause);
 	}

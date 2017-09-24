@@ -37,7 +37,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT story_page_id, story_id, body, page_num, image_path, image_path_med, image_path_sml, audio_path, date_created, date_modified, unsaved FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT story_page_id, story_id, body, page_num, image_path, image_path_med, image_path_sml, audio_path, date_created, date_modified, unsaved, is_audio_muted FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -113,6 +113,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 * Index of column unsaved
 	 */
 	protected static final int COLUMN_UNSAVED = 11;
+	protected static final int COLUMN_IS_AUDIO_MUTED = 12;
 
 	/** 
 	 * Number of columns
@@ -428,7 +429,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "little_bird_tales.story_pages";
+		return "story_pages";
 	}
 
 	/** 
@@ -479,6 +480,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setDateCreated( rs.getTimestamp(COLUMN_DATE_CREATED ) );
 		dto.setDateModified( rs.getTimestamp(COLUMN_DATE_MODIFIED ) );
 		dto.setUnsaved( rs.getShort( COLUMN_UNSAVED ) );
+		dto.setIsAudioMuted( rs.getBoolean( COLUMN_IS_AUDIO_MUTED ) );
 	}
 
 	/** 
