@@ -22,10 +22,7 @@
 	<classpathentry kind="lib" path="external_jars/jaudiotagger-1.0.8.jar"/>
 	<classpathentry kind="lib" path="external_jars/javaee-api-5.1.1.jar"/>
 	<classpathentry kind="lib" path="external_jars/jcl-over-slf4j-1.5.10.jar"/>
-	<classpathentry kind="lib" path="external_jars/jruby-complete-1.1.6.jar"/>
-	<classpathentry kind="lib" path="external_jars/jruby-engine-1.1.6.jar"/>
 	<classpathentry kind="lib" path="external_jars/jul-to-slf4j-1.5.10.jar"/>
-	<classpathentry kind="lib" path="external_jars/jython-2.5.jar"/>
 	<classpathentry kind="lib" path="external_jars/log4j-over-slf4j-1.5.10.jar"/>
 	<classpathentry kind="lib" path="external_jars/logback-classic-0.9.18.jar"/>
 	<classpathentry kind="lib" path="external_jars/logback-core-0.9.18.jar"/>
@@ -34,7 +31,6 @@
 	<classpathentry kind="lib" path="external_jars/mina-integration-jmx-2.0.0-RC2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="external_jars/mysql-connector-java-5.1.15-bin.jar"/>
 	<classpathentry kind="lib" path="external_jars/quartz-1.6.5.jar"/>
-	<classpathentry kind="lib" path="external_jars/red5.jar"/>
 	<classpathentry kind="lib" path="external_jars/slf4j-api-1.5.10.jar"/>
 	<classpathentry kind="lib" path="external_jars/spring-asm-3.0.3.jar"/>
 	<classpathentry kind="lib" path="external_jars/spring-beans-3.0.3.jar"/>
@@ -43,13 +39,7 @@
 	<classpathentry kind="lib" path="external_jars/spring-core-3.0.3.jar"/>
 	<classpathentry kind="lib" path="external_jars/spring-expression-3.0.3.jar"/>
 	<classpathentry kind="lib" path="external_jars/spring-web-3.0.3.jar"/>
-	<classpathentry kind="lib" path="external_jars/tomcat-coyote-6.0.26.jar"/>
-	<classpathentry kind="lib" path="external_jars/tomcat-juli-slf4j-1.5.0.jar"/>
 	<classpathentry kind="lib" path="external_jars/wrapper.jar"/>
-	<classpathentry kind="lib" path="external_jars/wrapperdemo.jar"/>
-	<classpathentry kind="lib" path="external_jars/wrappertest.jar"/>
-	<classpathentry kind="lib" path="external_jars/xercesImpl-2.9.1.jar"/>
-	<classpathentry kind="lib" path="external_jars/xmlrpc-2.0.1.jar"/>
 	<classpathentry kind="lib" path="external_jars/aws-java-sdk-1.11.202.jar"/>
 	<classpathentry kind="lib" path="external_jars/aspectjrt-1.8.2.jar"/>
 	<classpathentry kind="lib" path="external_jars/aspectjweaver.jar"/>
