@@ -106,7 +106,7 @@ public class Program {
 		}
 		else	// default value if not specified
 		{
-			propertiesFileName = "littlebirdtale_en_US.properties";
+			propertiesFileName = "littlebirdtale_en_US_lbtprod.properties";
 		}
 		System.out.println("XXX propertiesFileName " + propertiesFileName);
 		CompileVideo();

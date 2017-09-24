@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
-Class-Path: . external_jars/tomcat-juli-slf4j-1.5.0.jar external_jars/
+Class-Path: . external_jars/aws-java-sdk-1.11.202-sources.jar
+ external_jars/aws-java-sdk-1.11.202.jar external_jars/tomcat-juli-slf4j-1.5.0.jar external_jars/
  xmlrpc-2.0.1.jar external_jars/catalina-6.0.26.jar external_jars/ehca
  che-2.1.0.jar external_jars/jul-to-slf4j-1.5.10.jar external_jars/jru
  by-complete-1.1.6.jar external_jars/asm-commons-3.1.jar external_jars
@@ -25,6 +26,6 @@ Class-Path: . external_jars/tomcat-juli-slf4j-1.5.0.jar external_jars/
  ar external_jars/jasper-el-6.0.26.jar external_jars/commons-codec-1.4
  .jar external_jars/javaee-api-5.1.1.jar external_jars/jruby-engine-1.
  1.6.jar external_jars/quartz-1.6.5.jar external_jars/xercesImpl-2.9.1
- .jar
+ .jar external_jars/aws-java-sdk-1.11.202-javadoc.jar 
 Main-Class: com.lbt.Program
 

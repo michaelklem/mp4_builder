@@ -24,6 +24,12 @@ import com.lbt.factory.StoriesDaoFactory;
 import com.lbt.factory.MP4FilesDaoFactory;
 import com.lbt.factory.StoryPagesDaoFactory;
 import com.lbt.factory.UsersDaoFactory;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
+import java.util.List;
+
 
 /**
  * @author adil
@@ -80,12 +86,21 @@ public class DataModel {
 	 */
 	public MP4Files getNextStory()
 	{
+		System.out.println("getNextStory");
 		MP4Files _story = null;
 			try {
+				String bucket_name = "lbt.com";
+				final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+				ObjectListing ol = s3.listObjects(bucket_name);
+				List<S3ObjectSummary> objects = ol.getObjectSummaries();
+				for (S3ObjectSummary os: objects) {
+				    System.out.println("* " + os.getKey());
+				}
+
+				
 				
 				MP4FilesDao _dao = getMP4FilesDao();
 				MP4Files _result[] = _dao.findByDynamicWhere("process_as_mp4 = 1 order by mp4_job_requested_date asc LIMIT 1", null);
-				System.out.println("xxx _result.length: " + _result.length);
 				if (_result.length > 0) {
 					// only processing 1 story then exiting
 					MP4Files mp4File = (MP4Files)_result[0];
