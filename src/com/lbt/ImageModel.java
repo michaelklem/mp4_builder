@@ -13,6 +13,19 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import java.io.IOException;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Region;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.ObjectListing;
+
+import java.util.List;
+
+
 public class ImageModel {
 	/**
 	 * @param args
@@ -24,7 +37,7 @@ public class ImageModel {
 	public String combineImage= "C:\\Users\\adil\\Desktop\\combineImage.png";
 	public String taleImage= "C:\\Users\\adil\\Desktop\\Image.jpg";
 	public String text= "Hello World";
-		
+	public String awsBucket;
 
 	
 	public void TextOverlay() throws IOException {
@@ -41,10 +54,30 @@ public class ImageModel {
         
         
     }
+
+	public void CreateImageFromAWS(String bucketName) throws IOException
+	{
+		// this.awsBucket = bucketName;
+		// System.out.println("xxxx CreateImage to download AWS image: " + taleImage + " from AWS bucket: " + this.awsBucket);
+
+		// final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+		// boolean exists = s3.doesObjectExist(this.awsBucket, textImage);
+		// System.out.println("Does image " + taleImage + " exists on AWS: " + exists);
+
+				String bucket_name = "lbt.com";
+				final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+				ObjectListing ol = s3.listObjects(bucket_name);
+				List<S3ObjectSummary> objects = ol.getObjectSummaries();
+				for (S3ObjectSummary os: objects) {
+				    System.out.println("* " + os.getKey());
+				}
+
+	}
+
 	public void CreateImage() throws IOException
 	{
 		try{
-		System.out.println("xxxx create image: " + taleImage);
+
 		File talefile = new File(taleImage);
 		 		
 		if(!talefile.exists() || !talefile.isFile())

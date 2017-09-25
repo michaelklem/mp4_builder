@@ -62,6 +62,7 @@ public class Program {
 	public static String lastImagePath = "";
 	public static String textBG = "";
 	public static String ffmpegPath = "";
+	public static String awsBucket = "";
 	public static String ffmpegMergeCommandLine = "";
 	public static String ffmpegBuildCommandLine = "";
 	public static String defaultImagePath = "";
@@ -95,9 +96,10 @@ public class Program {
 			System.out.println(fontNames[a]);
 		}
 */
+		System.out.println("args[0]: " + args[0]);
+		System.out.println("args[1]: " + args[1]);
 		if(args != null && args.length >1)
 		{
-			System.out.println(args[0]);
 			if(args[0].equals("property_file"))
 			{
 				propertiesFileName = args[1];
@@ -128,7 +130,7 @@ public class Program {
 		
 		ffmpegPath = properties.getProperty("com.lbt.ffmpegpath");
 		awsBucket = properties.getProperty("com.lbt.aws.bucket");
-		directoryPrefix = awsBucket + properties.getProperty("com.lbt.userdirectory"); // lbt.com/users/
+		directoryPrefix = properties.getProperty("com.lbt.userdirectory"); 
 		emptyAudio = properties.getProperty("com.lbt.emptyaudio");
 		defaultImagePath = properties.getProperty("com.lbt.defaultimagepath");
 		textBG = properties.getProperty("com.lbt.textbg");
@@ -178,7 +180,7 @@ public class Program {
 							HTMLUtil.removeHTML(HtmlEntities.decode(nextStory.getTitle())),
 							tempImagesDirectoryPrefix + "text" + pageCounter + ".png",
 							storyImagesDirectoryPrefix + nextStory.getImagePath(),
-							image_file_name);
+							image_file_name, awsBucket);
 					if (true)return;
 					createAudioFile(
 							storyAudioDirectoryPrefix + nextStory.getAudioPath(),
@@ -201,7 +203,7 @@ public class Program {
 									HTMLUtil.removeHTML(_storyPages[i].getBody()),
 									tempImagesDirectoryPrefix + "text" + pageCounter + ".png", 
 									storyImagesDirectoryPrefix + _storyPages[i].getImagePath(),
-									image_file_name);
+									image_file_name, awsBucket);
 								System.out.println("XXX page audio " + _storyPages[i].getAudioPath());
 								createAudioFile(
 									storyAudioDirectoryPrefix + _storyPages[i].getAudioPath(),
@@ -234,15 +236,15 @@ public class Program {
 	}
 	
 	// creates an image of the story image and page text rendered as an image
-	public static void createImage(String text,String textImage, String taleImage, String combineImage) throws IOException
+	public static void createImage(String text,String textImage, String taleImage, String combineImage, String awsBucketName) throws IOException
 	{
 			mm.text = text;
 			mm.textImage = textImage;
 			mm.taleImage = taleImage;
 			mm.textBG = textBG;
 			mm.combineImage = combineImage;
-			mm.TextOverlay();
-			mm.CreateImage();
+			//mm.TextOverlay();
+			mm.CreateImageFromAWS(awsBucketName);
 			System.out.println("createImage: text: " + text);
 			System.out.println("createImage: textImage: " + textImage);
 			System.out.println("createImage: taleImage: " + taleImage);
@@ -281,9 +283,9 @@ public class Program {
 	
 	// expected to contain the user's directory bucket path + "/" + user id
 	// example /a/b/c/e/12345
-	public static void setStoryDirectories(String userBucketPath)
+	public static void setStoryDirectories(long userId)
 	{
-		storyDirectoryPrefix = directoryPrefix + userBucketPath + "/";
+		storyDirectoryPrefix = directoryPrefix + userId + "/";
 		storyImagesDirectoryPrefix = storyDirectoryPrefix + "images/";
 		storyAudioDirectoryPrefix = storyDirectoryPrefix + "audio/";
 		storyVideoDirectoryPrefix = directoryPrefix + "video/"; // where the final output is stored
