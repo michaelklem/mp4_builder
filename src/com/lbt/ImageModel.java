@@ -44,7 +44,7 @@ public class ImageModel {
 	public void CreateImage() throws IOException
 	{
 		try{
-		
+		System.out.println("xxxx create image: " + taleImage);
 		File talefile = new File(taleImage);
 		 		
 		if(!talefile.exists() || !talefile.isFile())

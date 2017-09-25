@@ -127,7 +127,8 @@ public class Program {
 		}
 		
 		ffmpegPath = properties.getProperty("com.lbt.ffmpegpath");
-		directoryPrefix = properties.getProperty("com.lbt.userdirectory");
+		awsBucket = properties.getProperty("com.lbt.aws.bucket");
+		directoryPrefix = awsBucket + properties.getProperty("com.lbt.userdirectory"); // lbt.com/users/
 		emptyAudio = properties.getProperty("com.lbt.emptyaudio");
 		defaultImagePath = properties.getProperty("com.lbt.defaultimagepath");
 		textBG = properties.getProperty("com.lbt.textbg");
@@ -160,7 +161,8 @@ public class Program {
 					dm.startProcessing(nextStory);
 					String storyID = String.valueOf(nextStory.getStoryId());
 					String userID = String.valueOf(nextStory.getUserId());
-					setStoryDirectories(nextStory.getFullBucketPath());
+					// setStoryDirectories(nextStory.getFullBucketPath());
+					setStoryDirectories(nextStory.getUserId());
 					
 					createDirectories(storyID, userID);
 
@@ -169,6 +171,8 @@ public class Program {
 					String audio_file_name = tempAudioDirectoryPrefix + pageCounter + ".flv";
 					System.out.println("xxx image: " + image_file_name);
 					System.out.println("xxx audio: " + audio_file_name);
+					System.out.println("xxx tempImagesDirectoryPrefix: " + tempImagesDirectoryPrefix);
+					System.out.println("xxx storyImagesDirectoryPrefix: " + storyImagesDirectoryPrefix);
 
 					createImage(
 							HTMLUtil.removeHTML(HtmlEntities.decode(nextStory.getTitle())),
@@ -288,12 +292,6 @@ public class Program {
 	    if (success) {
 	      System.out.println("Directory: " + storyVideoDirectoryPrefix + " created");
 	    }
-
-		// storyDirectoryPrefix = "/tmp/" + userBucketPath + "/";
-		// storyImagesDirectoryPrefix = storyDirectoryPrefix + "images/";
-		// storyAudioDirectoryPrefix = storyDirectoryPrefix + "audio/";
-		// storyVideoDirectoryPrefix = "/tmp/" + "video/"; // where the final output is stored
-
 	}
 	public static void copyFile(File sourceFile, File destFile) throws IOException {
 		
