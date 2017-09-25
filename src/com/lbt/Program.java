@@ -167,12 +167,15 @@ public class Program {
 					// cover page + audio
 					String image_file_name = tempImagesDirectoryPrefix + pageCounter + ".png";
 					String audio_file_name = tempAudioDirectoryPrefix + pageCounter + ".flv";
-					
+					System.out.println("xxx image: " + image_file_name);
+					System.out.println("xxx audio: " + audio_file_name);
+
 					createImage(
 							HTMLUtil.removeHTML(HtmlEntities.decode(nextStory.getTitle())),
 							tempImagesDirectoryPrefix + "text" + pageCounter + ".png",
 							storyImagesDirectoryPrefix + nextStory.getImagePath(),
 							image_file_name);
+					if (true)return;
 					createAudioFile(
 							storyAudioDirectoryPrefix + nextStory.getAudioPath(),
 							audio_file_name);
@@ -280,10 +283,17 @@ public class Program {
 		storyImagesDirectoryPrefix = storyDirectoryPrefix + "images/";
 		storyAudioDirectoryPrefix = storyDirectoryPrefix + "audio/";
 		storyVideoDirectoryPrefix = directoryPrefix + "video/"; // where the final output is stored
+		System.out.println("Creating directory: " + storyVideoDirectoryPrefix);
 		boolean success = (new File(storyVideoDirectoryPrefix)).mkdir();
 	    if (success) {
 	      System.out.println("Directory: " + storyVideoDirectoryPrefix + " created");
 	    }
+
+		// storyDirectoryPrefix = "/tmp/" + userBucketPath + "/";
+		// storyImagesDirectoryPrefix = storyDirectoryPrefix + "images/";
+		// storyAudioDirectoryPrefix = storyDirectoryPrefix + "audio/";
+		// storyVideoDirectoryPrefix = "/tmp/" + "video/"; // where the final output is stored
+
 	}
 	public static void copyFile(File sourceFile, File destFile) throws IOException {
 		
