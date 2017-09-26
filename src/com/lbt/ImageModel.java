@@ -42,11 +42,13 @@ public class ImageModel {
 	
 	public void TextOverlay() throws IOException {
         try {
+        	System.out.println("xxx textBG: " + textBG);
         	File txtBGfile = new File(textBG);
         	image = ImageIO.read(txtBGfile);
             image = process(image);
             File outputfile = new File(textImage);
             ImageIO.write(image, "png", outputfile);
+        	System.out.println("xxx textBG outputfile: " + outputfile);
         } catch (IOException e) {
             throw e;
         }

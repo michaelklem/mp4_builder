@@ -243,7 +243,8 @@ public class Program {
 			mm.taleImage = taleImage;
 			mm.textBG = textBG;
 			mm.combineImage = combineImage;
-			//mm.TextOverlay();
+			System.out.println("TextOverlay");
+			mm.TextOverlay();
 			mm.CreateImageFromAWS(awsBucketName);
 			System.out.println("createImage: text: " + text);
 			System.out.println("createImage: textImage: " + textImage);
