@@ -4,6 +4,7 @@
 package com.lbt;
 
 import java.awt.GraphicsEnvironment;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -181,11 +182,11 @@ public class Program {
 							tempImagesDirectoryPrefix + "text" + pageCounter + ".png",
 							storyImagesDirectoryPrefix + nextStory.getImagePath(),
 							image_file_name, awsBucket);
-					if (true)return;
 					createAudioFile(
 							storyAudioDirectoryPrefix + nextStory.getAudioPath(),
-							audio_file_name);
+							audio_file_name, awsBucket);
 					combineImageAndAudio(image_file_name, audio_file_name);
+					if (true)return;
 
 
 					StoryPages _storyPages[] = null;
@@ -204,17 +205,17 @@ public class Program {
 									tempImagesDirectoryPrefix + "text" + pageCounter + ".png", 
 									storyImagesDirectoryPrefix + _storyPages[i].getImagePath(),
 									image_file_name, awsBucket);
-								System.out.println("XXX page audio " + _storyPages[i].getAudioPath());
 								createAudioFile(
 									storyAudioDirectoryPrefix + _storyPages[i].getAudioPath(),
-									audio_file_name);
+									audio_file_name, awsBucket);
+								if (true) return;
 								combineImageAndAudio(image_file_name, audio_file_name);	
 							}
 						}
 						if ((new File(lastImagePath).exists())) {
 							++pageCounter;
 							audio_file_name = tempAudioDirectoryPrefix + pageCounter + ".flv";
-							createAudioFile(null, audio_file_name);
+							createAudioFile(null, audio_file_name, awsBucket);
 							combineImageAndAudio(lastImagePath, audio_file_name);	
 						}
 					}
@@ -243,7 +244,6 @@ public class Program {
 			mm.taleImage = taleImage;
 			mm.textBG = textBG;
 			mm.combineImage = combineImage;
-			System.out.println("TextOverlay");
 			mm.TextOverlay();
 			mm.CreateImageFromAWS(awsBucketName);
 			System.out.println("createImage: text: " + text);
@@ -395,11 +395,9 @@ public class Program {
 
 	// copies the audio file from its source to destination and renames with 
 	// with a numeric name like '00001.flv'
-	public static void createAudioFile(String sourcePath,String destPath) throws IOException
+	public static void createAudioFile(String sourcePath,String destPath, String awsBucketName) throws IOException
 	{
 		String destFileName = "";
-		System.out.println("XXXXX createAudioFile " + sourcePath);		
-		System.out.println("XXXXXX destPath " + destPath);		
 		try {
 			if (sourcePath == null 
 				|| sourcePath == "" 
@@ -410,11 +408,32 @@ public class Program {
 				sourcePath = emptyAudio;
 			}
 
-			File srcFile = new File(sourcePath);
-			File destFile = new File(destPath);
-			copyFile(srcFile, destFile);
+		System.out.println("XXXXX createAudioFile: " + sourcePath);		
+		System.out.println("XXXXXX destPath: " + destPath);		
+
+		// Download audio file from AWS
+		System.out.println("xxxx createAudioFile to download AWS file: " + sourcePath + " from AWS bucket: " + awsBucket);
+			final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+			S3Object object = s3.getObject(new GetObjectRequest(awsBucketName, sourcePath));
+			InputStream audioData = object.getObjectContent();
+			// Process the audioData stream.
+			BufferedInputStream audioBuffer = new BufferedInputStream(audioData);
+			FileOutputStream fout = new FileOutputStream(destPath);
+
+			// File srcFile = new File(sourcePath);
+			// File destFile = new File(destPath);
+			// copyFile(srcFile, destFile);
+			int i;
+			do {
+			  i = audioBuffer.read();
+			  if (i != -1)
+			    fout.write(i);
+			} while (i != -1);
+			audioBuffer.close();
+			fout.close();
+			
+			audioData.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			throw e;
 		}
 	}
