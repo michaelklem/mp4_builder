@@ -40,6 +40,18 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.*;
 import org.apache.commons.lang.StringEscapeUtils;
 
+import java.io.IOException;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Region;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.ObjectListing;
+
+import java.util.List;
+
 /**
  * @author adil
  *
@@ -84,18 +96,6 @@ public class Program {
 	 */
 	public static void main(String[] args)
 	{
-/*
-		// Font info is obtained from the current graphics environment.
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-		//--- Get an array of font names (smaller than the number of fonts)
-		String[] fontNames = ge.getAvailableFontFamilyNames();
-		for ( int a = 0; a< fontNames.length; a++)
-		{
-			
-			System.out.println(fontNames[a]);
-		}
-*/
 		System.out.println("args[0]: " + args[0]);
 		System.out.println("args[1]: " + args[1]);
 		if(args != null && args.length >1)

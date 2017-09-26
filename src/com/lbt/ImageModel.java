@@ -9,6 +9,7 @@ import java.awt.font.LineMetrics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -45,9 +46,9 @@ public class ImageModel {
         	System.out.println("xxx textBG: " + textBG);
         	File txtBGfile = new File(textBG);
         	image = ImageIO.read(txtBGfile);
-            image = process(image);
-            File outputfile = new File(textImage);
-            ImageIO.write(image, "png", outputfile);
+          image = process(image);
+          File outputfile = new File(textImage);
+          ImageIO.write(image, "png", outputfile);
         	System.out.println("xxx textBG outputfile: " + outputfile);
         } catch (IOException e) {
             throw e;
@@ -59,21 +60,23 @@ public class ImageModel {
 
 	public void CreateImageFromAWS(String bucketName) throws IOException
 	{
-		// this.awsBucket = bucketName;
-		// System.out.println("xxxx CreateImage to download AWS image: " + taleImage + " from AWS bucket: " + this.awsBucket);
-
-		// final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-		// boolean exists = s3.doesObjectExist(this.awsBucket, textImage);
-		// System.out.println("Does image " + taleImage + " exists on AWS: " + exists);
-
-				String bucket_name = "lbt.com";
+		this.awsBucket = bucketName;
+		System.out.println("xxxx CreateImage to download AWS image: " + taleImage + " from AWS bucket: " + this.awsBucket);
+		try {
 				final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-				ObjectListing ol = s3.listObjects(bucket_name);
-				List<S3ObjectSummary> objects = ol.getObjectSummaries();
-				for (S3ObjectSummary os: objects) {
-				    System.out.println("* " + os.getKey());
-				}
-
+				S3Object object = s3.getObject(new GetObjectRequest(bucketName, taleImage));
+				InputStream imageData = object.getObjectContent();
+				// Process the imageData stream.
+				BufferedImage timage = ImageIO.read(imageData);
+				File textfile = new File(textImage);
+				BufferedImage textimage = ImageIO.read(textfile);
+				image = combineImages(timage,textimage);
+				File outputfile = new File(combineImage);
+        ImageIO.write(image, "png", outputfile);
+				imageData.close();
+		} catch (IOException e) {
+			throw e;
+		}
 	}
 
 	public void CreateImage() throws IOException
