@@ -545,7 +545,7 @@ public class Program {
 				HttpClient httpclient = new HttpClient();
 				PostMethod post = new PostMethod(url);
 				int result = httpclient.executeMethod(post);
-				System.out.println("Sending message to LBT site. Success: " + (result == 200 ? "true" : "false" ));		
+				System.out.println("Sending message to LBT site " + url + ". Success: " + (result == 200 ? "true" : "false" ));		
 			}
 			catch(Exception ex )
 			{

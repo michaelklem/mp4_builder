@@ -9,3 +9,10 @@ OS X
 java -cp "mcutility_aws.jar:external_jars/*" com.lbt.Program property_file littlebirdtale_en_US_lbtprod.properties
 
 
+
+
+To create jar file
+cd to bin directory
+jar -cvfm ../mcutility_aws.jar ../resources/MANIFEST.MF .
+
+
