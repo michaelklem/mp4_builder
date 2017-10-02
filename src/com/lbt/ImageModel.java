@@ -64,17 +64,24 @@ public class ImageModel {
 		System.out.println("xxxx CreateImage to download AWS image: " + taleImage + " from AWS bucket: " + this.awsBucket);
 		try {
 				final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-				S3Object object = s3.getObject(new GetObjectRequest(bucketName, taleImage));
-				InputStream imageData = object.getObjectContent();
-				// Process the imageData stream.
-				BufferedImage timage = ImageIO.read(imageData);
+				boolean exists = s3.doesObjectExist(bucketName, taleImage);
+				File talefile = new File(Program.defaultImagePath); ;
+				BufferedImage timage = ImageIO.read(talefile);
+				InputStream imageData = null;
+				if (exists) {
+					S3Object object = s3.getObject(new GetObjectRequest(bucketName, taleImage));
+					imageData = object.getObjectContent();
+					// Process the imageData stream.
+					timage = ImageIO.read(imageData);
+				}
 				File textfile = new File(textImage);
 				BufferedImage textimage = ImageIO.read(textfile);
 				image = combineImages(timage,textimage);
 				File outputfile = new File(combineImage);
         ImageIO.write(image, "png", outputfile);
-				imageData.close();
-		} catch (IOException e) {
+				if (imageData != null) imageData.close();
+		} catch (Exception e) {
+			System.out.println("CreateImage error downloading AWS image: " + taleImage + " from AWS bucket: " + this.awsBucket + " error: " + e.getMessage());
 			throw e;
 		}
 	}

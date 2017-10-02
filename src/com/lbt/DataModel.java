@@ -88,8 +88,8 @@ public class DataModel {
 		MP4Files _story = null;
 			try {				
 				MP4FilesDao _dao = getMP4FilesDao();
-				// MP4Files _result[] = _dao.findByDynamicWhere("process_as_mp4 = 1 order by mp4_job_requested_date asc LIMIT 1", null);
-				MP4Files _result[] = _dao.findByDynamicWhere("story_id = 694032 LIMIT 1", null); // Test
+				MP4Files _result[] = _dao.findByDynamicWhere("process_as_mp4 = 1 order by mp4_job_requested_date asc LIMIT 1", null);
+				//MP4Files _result[] = _dao.findByDynamicWhere("story_id = 694032 LIMIT 1", null); // Test
 				System.out.println("Found stories to compile: " + _result.length);
 				if (_result.length > 0) {
 					// only processing 1 story then exiting

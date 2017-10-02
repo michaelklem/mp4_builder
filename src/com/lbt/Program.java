@@ -186,7 +186,6 @@ public class Program {
 							storyAudioDirectoryPrefix + nextStory.getAudioPath(),
 							audio_file_name, awsBucket);
 					combineImageAndAudio(image_file_name, audio_file_name);
-					if (true)return;
 
 
 					StoryPages _storyPages[] = null;
@@ -196,7 +195,9 @@ public class Program {
 						if (_storyPages != null && _storyPages.length > 0){
 							for (int i = 0; i < _storyPages.length; i++) {
 								++pageCounter;
-								
+								System.out.println("");
+								System.out.println("=== building page: " + pageCounter + " === ");
+								System.out.println("");
 								image_file_name = tempImagesDirectoryPrefix + pageCounter + ".png";
 								audio_file_name = tempAudioDirectoryPrefix + pageCounter + ".flv";
 
@@ -208,10 +209,10 @@ public class Program {
 								createAudioFile(
 									storyAudioDirectoryPrefix + _storyPages[i].getAudioPath(),
 									audio_file_name, awsBucket);
-								if (true) return;
 								combineImageAndAudio(image_file_name, audio_file_name);	
 							}
 						}
+						System.out.println("ffff lastImagePath: " + lastImagePath );
 						if ((new File(lastImagePath).exists())) {
 							++pageCounter;
 							audio_file_name = tempAudioDirectoryPrefix + pageCounter + ".flv";
@@ -289,7 +290,7 @@ public class Program {
 		storyDirectoryPrefix = directoryPrefix + userId + "/";
 		storyImagesDirectoryPrefix = storyDirectoryPrefix + "images/";
 		storyAudioDirectoryPrefix = storyDirectoryPrefix + "audio/";
-		storyVideoDirectoryPrefix = directoryPrefix + "video/"; // where the final output is stored
+		storyVideoDirectoryPrefix = storyDirectoryPrefix + "video/"; // where the final output is stored
 		System.out.println("Creating directory: " + storyVideoDirectoryPrefix);
 		boolean success = (new File(storyVideoDirectoryPrefix)).mkdir();
 	    if (success) {
@@ -328,6 +329,7 @@ public class Program {
 		System.out.println("combineImageAndAudio image "+ image_file);
 		System.out.println("combineImageAndAudio audio "+ audio_file);
 		String output_file = tempVideoDirectoryPrefix + pageCounter +".mpg";
+		System.out.println("combineImageAndAudio output_file "+ output_file);
 		String command = ffmpegMergeCommandLine.replace("%image_file%", image_file);
 		command = command.replace("%audio_file%", audio_file);
 		command = ffmpegPath + " " + command.replace("%output_file%", output_file);
@@ -377,7 +379,8 @@ public class Program {
 		String filename = cleanFileName(story.getTitle());
 		story.setFilename(filename);
 
-		String output_file = storyVideoDirectoryPrefix + filename +".mp4 "; //tempVideoDirectoryPrefix + "final.mp4";
+		String output_file = tempVideoDirectoryPrefix + filename +".mp4 "; //klem
+		System.out.println ("MP4 file output: " + output_file);
 		String command = ffmpegBuildCommandLine.replace("%combined_mpg_files%", combined_mpg_files);
 		command = ffmpegPath + " " + command.replace("%output_file%", output_file);
 
@@ -411,28 +414,34 @@ public class Program {
 		System.out.println("XXXXX createAudioFile: " + sourcePath);		
 		System.out.println("XXXXXX destPath: " + destPath);		
 
+		if (sourcePath == emptyAudio)
+		{
+			File srcFile = new File(sourcePath);
+			File destFile = new File(destPath);
+			copyFile(srcFile, destFile);
+			audioFiles.add(destFile.getPath());
+		}
+		else 
+		{
 		// Download audio file from AWS
-		System.out.println("xxxx createAudioFile to download AWS file: " + sourcePath + " from AWS bucket: " + awsBucket);
-			final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-			S3Object object = s3.getObject(new GetObjectRequest(awsBucketName, sourcePath));
-			InputStream audioData = object.getObjectContent();
-			// Process the audioData stream.
-			BufferedInputStream audioBuffer = new BufferedInputStream(audioData);
-			FileOutputStream fout = new FileOutputStream(destPath);
-
-			// File srcFile = new File(sourcePath);
-			// File destFile = new File(destPath);
-			// copyFile(srcFile, destFile);
-			int i;
-			do {
-			  i = audioBuffer.read();
-			  if (i != -1)
-			    fout.write(i);
-			} while (i != -1);
-			audioBuffer.close();
-			fout.close();
-			
-			audioData.close();
+			System.out.println("xxxx createAudioFile to download AWS file: " + sourcePath + " from AWS bucket: " + awsBucket);
+				final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+				S3Object object = s3.getObject(new GetObjectRequest(awsBucketName, sourcePath));
+				InputStream audioData = object.getObjectContent();
+				// Process the audioData stream.
+				BufferedInputStream audioBuffer = new BufferedInputStream(audioData);
+				FileOutputStream fout = new FileOutputStream(destPath);
+				int i;
+				do {
+				  i = audioBuffer.read();
+				  if (i != -1)
+				    fout.write(i);
+				} while (i != -1);
+				audioBuffer.close();
+				fout.close();
+				
+				audioData.close();
+			}
 		} catch (IOException e) {
 			throw e;
 		}
