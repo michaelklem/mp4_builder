@@ -379,7 +379,7 @@ public class Program {
 		String filename = cleanFileName(story.getTitle());
 		story.setFilename(filename);
 
-		String output_file = tempVideoDirectoryPrefix + filename +".mp4 "; //klem
+		String output_file = tempVideoDirectoryPrefix + filename +".mp4";
 		System.out.println ("MP4 file output: " + output_file);
 		String command = ffmpegBuildCommandLine.replace("%combined_mpg_files%", combined_mpg_files);
 		command = ffmpegPath + " " + command.replace("%output_file%", output_file);
@@ -390,12 +390,46 @@ public class Program {
 			Runtime rt = Runtime.getRuntime();
 			Process proc = rt.exec(command);
 			System.out.println(convertStreamToString(proc.getErrorStream()));
+			uploadMp4ToAWS(output_file, filename +".mp4", awsBucket);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw e;
 		}
 	}
 
+	public static void uploadMp4ToAWS(String uploadFileName, String file_name, String bucketName)
+	{
+		try {
+			final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+			String keyName = "videos/" + file_name;
+			System.out.println("Uploading a new object to S3 from a file: " + uploadFileName );
+			File file = new File(uploadFileName);
+			s3.putObject(new PutObjectRequest(bucketName, keyName, file));		
+			System.out.println("Done uploading a new object to S3 from a file: " + uploadFileName );
+		}
+		catch (AmazonServiceException ase) {
+            System.out.println("Caught an AmazonServiceException, which " +
+            		"means your request made it " +
+                    "to Amazon S3, but was rejected with an error response" +
+                    " for some reason.");
+            System.out.println("Error Message:    " + ase.getMessage());
+            System.out.println("HTTP Status Code: " + ase.getStatusCode());
+            System.out.println("AWS Error Code:   " + ase.getErrorCode());
+            System.out.println("Error Type:       " + ase.getErrorType());
+            System.out.println("Request ID:       " + ase.getRequestId());
+        } 
+     catch (AmazonClientException ace) {
+            System.out.println("Caught an AmazonClientException, which " +
+            		"means the client encountered " +
+                    "an internal error while trying to " +
+                    "communicate with S3, " +
+                    "such as not being able to access the network.");
+            System.out.println("Error Message: " + ace.getMessage());
+        }
+		catch (Exception e) {
+			System.out.println("Error uploading MP4 to AWS: " + e.getMessage());
+			}
+	}
 	// copies the audio file from its source to destination and renames with 
 	// with a numeric name like '00001.flv'
 	public static void createAudioFile(String sourcePath,String destPath, String awsBucketName) throws IOException
