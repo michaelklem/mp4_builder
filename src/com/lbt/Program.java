@@ -20,6 +20,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.channels.FileChannel;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -232,7 +233,7 @@ public class Program {
 				
 				// tell the web site that we are done
 				sendMessageToWebSite(mp4Files.getMp4Id());
-//				deleteDirectory(new File(tempUserDirectoryPrefix));
+				deleteDirectory(new File(tempUserDirectoryPrefix));
 			}
 		}
 	}
