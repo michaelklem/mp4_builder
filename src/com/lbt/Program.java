@@ -38,8 +38,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.*;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import java.io.IOException;
@@ -51,6 +49,17 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.services.s3.*;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.services.s3.model.ObjectListing;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import java.util.List;
 
@@ -149,6 +158,8 @@ public class Program {
 	}
 	public static void CompileVideo()
 	{
+		String s3_path = null;
+
 		if (!isProcessing) {
 			isProcessing = true;
 			loadConfiguration();
@@ -223,7 +234,7 @@ public class Program {
 					}
 
 					// concatenate all image and audio mpg files into a single mpg file
-					buildMP4( concatenateFiles(), nextStory );
+					s3_path = buildMP4( concatenateFiles(), nextStory );
 					
 					dm.videoCompiled(mp4Files);
 					System.out.println("xxxxxxxx Completed MP4 compilation for " + nextStory.getStoryId() + " at " + new Date());
@@ -232,7 +243,7 @@ public class Program {
 				}
 				
 				// tell the web site that we are done
-				sendMessageToWebSite(mp4Files.getMp4Id());
+				sendMessageToWebSite(mp4Files.getMp4Id(),s3_path);
 				deleteDirectory(new File(tempUserDirectoryPrefix));
 			}
 		}
@@ -375,8 +386,9 @@ public class Program {
 		return output_filename;
 	}
 
-	public static void buildMP4(String combined_mpg_files, Stories story) throws Exception
+	public static String buildMP4(String combined_mpg_files, Stories story) throws Exception
 	{
+		String s3_path = null;
 		String filename = cleanFileName(story.getTitle());
 		story.setFilename(filename);
 
@@ -392,10 +404,12 @@ public class Program {
 			Process proc = rt.exec(command);
 			System.out.println(convertStreamToString(proc.getErrorStream()));
 			uploadMp4ToAWS(output_file, filename +".mp4", awsBucket);
+			s3_path = "http://" + awsBucket + ".s3-us-west-1.amazonaws.com/videos/" + filename +".mp4";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw e;
 		}
+		return s3_path;
 	}
 
 	public static void uploadMp4ToAWS(String uploadFileName, String file_name, String bucketName)
@@ -573,14 +587,29 @@ public class Program {
 	      }
 	      return str;
 	  }
-		static void sendMessageToWebSite(long mp4FileId)
+		static void sendMessageToWebSite(long mp4FileId, String s3_path)
 		{
 			try {
-				String url = "http://" + hostname + "/tales/mp4Completed/mp4file_id/" + mp4FileId;
-				HttpClient httpclient = new HttpClient();
-				PostMethod post = new PostMethod(url);
-				int result = httpclient.executeMethod(post);
-				System.out.println("Sending message to LBT site " + url + ". Success: " + (result == 200 ? "true" : "false" ));		
+				String url = "http://" + hostname + "/tales/mp4Completed";
+				HttpPost httpPost = new HttpPost(url);
+				List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+				urlParameters.add(new BasicNameValuePair("mp4file_id", mp4FileId + ""));
+				urlParameters.add(new BasicNameValuePair("s3_path", s3_path));
+				httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
+				CloseableHttpClient httpclient = HttpClients.createDefault();
+				CloseableHttpResponse response = httpclient.execute(httpPost);
+
+
+	            try {
+	                System.out.println("HTTPCLIENT RESULT: " + response.getStatusLine());
+					System.out.println("Sending message to LBT site " + url + ". Success: " + (response.getStatusLine().getStatusCode() == 200 ? "true" : "false" ));		
+	                HttpEntity entity2 = response.getEntity();
+	                // do something useful with the response body
+	                // and ensure it is fully consumed
+	                EntityUtils.consume(entity2);
+	            } finally {
+	                response.close();
+	            }
 			}
 			catch(Exception ex )
 			{

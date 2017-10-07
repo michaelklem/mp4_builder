@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="external_jars/commons-beanutils-1.8.2.jar"/>
 	<classpathentry kind="lib" path="external_jars/commons-codec-1.4.jar"/>
 	<classpathentry kind="lib" path="external_jars/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="external_jars/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="lib" path="external_jars/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="external_jars/commons-modeler-2.0.1.jar"/>
 	<classpathentry kind="lib" path="external_jars/commons-pool-1.4.jar"/>
